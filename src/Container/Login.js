@@ -2,6 +2,7 @@ import React ,  { useState } from 'react'
 import { Link } from "react-router-dom";
 import { auth , signInWithEmailAndPassword } from '../Config/Firebase';
 import { useNavigate } from 'react-router';
+import { db ,  ref , onValue} from '../Config/Firebase';
 const  initailState = ({
   username: "",
   password: ""
@@ -21,6 +22,17 @@ const Login = () => {
        signInWithEmailAndPassword(auth , obj.username , obj.password)
        .then((respon) => {
          console.log(respon);
+         let uid = respon.user.uid
+         console.log(uid)
+         obj.uid = uid
+         const refrance = ref(db , `/users/${obj.uid}`)
+         onValue(refrance, (snapshot)=> {
+              if(snapshot.exists()){
+                console.log(snapshot.val());
+                let userObj = snapshot.val();
+                navigate("/" , {state : userObj});
+              }
+         } )
          navigate("/Dashboard")
        }).catch((error) => {
           console.log(error);

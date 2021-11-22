@@ -1,11 +1,11 @@
 import React , {useState} from 'react'
 import { auth , createUserWithEmailAndPassword } from '../Config/Firebase'
-
+import { db , set , ref } from '../Config/Firebase'
 const Signup = () => {
   const initailState = ({
     username : "",
     email : "",
-    password : "",
+    password : ""
   })
   const [name , setName] = useState(initailState)
   const change_input = (value , property ) => {
@@ -18,7 +18,14 @@ const Signup = () => {
       setName(initailState)
      createUserWithEmailAndPassword(auth, name.email , name.password )
     .then((succes) => {
-      console.log(succes.user.uid)
+      let uid = succes.user.uid
+      console.log(uid)
+      name.uid = uid
+      const refrence = ref(db, `/users/${name.uid}`)
+      set(refrence , name)
+      .then(() => {
+        alert("user succesfully")
+      } )
     } ).catch((error) => {
       console.log(error);
     } )

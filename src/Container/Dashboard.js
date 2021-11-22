@@ -1,8 +1,10 @@
 import React , {useState , useEffect }  from 'react'
 import { auth ,  onAuthStateChanged , signOut } from '../Config/Firebase'
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 const Dashboard = () => {
+  const location = useLocation()
     // const [userLogin, setuserLogin] = useState(true)
+    // const [userlogin , setuserlogin ] = useState(false)
     const Navigation = useNavigate()
     const [loader , setloader] = useState(false);
 
@@ -24,6 +26,8 @@ const Dashboard = () => {
               // https://firebase.google.com/docs/reference/js/firebase.User
               const uid = user.uid;
               setloader(false)
+              // setuserlogin(true)
+              console.log(location.state);
             } else {
               // User is signed out
               // ...

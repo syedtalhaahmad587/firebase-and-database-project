@@ -7,6 +7,17 @@ import { getAuth,
      signOut ,
      onAuthStateChanged } 
      from "firebase/auth";
+     import { getDatabase,
+      get,
+       set,
+       push,
+       remove,
+       ref, 
+      onValue,
+      onChildAdded,
+      child  
+          } 
+     from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,11 +37,21 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
+const db = getDatabase(app)
 
 export {
     auth,
+    db,
     createUserWithEmailAndPassword, 
      signInWithEmailAndPassword,
      signOut,
-     onAuthStateChanged
+     onAuthStateChanged,
+     set,
+     push,
+     remove,
+     ref, 
+    onValue,
+    onChildAdded,
+    child,
+    get 
 };
